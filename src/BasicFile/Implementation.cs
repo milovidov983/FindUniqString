@@ -8,8 +8,7 @@ namespace BasicFile {
 		readonly long len;
 		readonly byte[] tmp1 = new byte[1];
 		readonly byte[] tmp2 = new byte[1];
-		readonly char[] charArray1 = new char[2];
-
+	
 
 		public Implementation(string path) {
 			reader = new FileStream($"{System.IO.Directory.GetCurrentDirectory()}/{path}", FileMode.Open);
@@ -38,8 +37,8 @@ namespace BasicFile {
 		public bool IsEquals(int index1, int index2) {
 			reader.Position = index1;
 			reader.Read(tmp1, 0, 1);
+
 			reader.Position = index2;
-			//reader.BaseStream.Seek(index2, SeekOrigin.Begin);
 			reader.Read(tmp2, 0, 1);
 
 			return tmp1[0] == tmp2[0];

@@ -1,16 +1,11 @@
-using BaseAbstractions;
-using System;
+using TestUtils;
 using Xunit;
 
 namespace SimpleFinderStringUnitTests {
-	public static class Factory {
-		public static IFile CreateBasicString(string content) {
-			return new BasicString.Implementation(content);
-		}
-	}
 
 
-	public class BasicStringTests {
+
+	public class SfSTests {
 		readonly SimpleFinder.Finder finder = new SimpleFinder.Finder();
 
 		[Fact]

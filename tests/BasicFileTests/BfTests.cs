@@ -3,7 +3,7 @@ using Xunit;
 
 namespace BasicFileTests {
 	
-	public class Tests {
+	public class BfTests {
 		[Fact]
 		public void DataSetIsEqual_IsEquals_True() {
 			var file = new BasicFile.Implementation(@"examples/aa1.txt");
@@ -32,7 +32,7 @@ namespace BasicFileTests {
 		public void IsEof_True() {
 			var file = new BasicFile.Implementation(@"examples/aa3.txt");
 
-			var result = file.IsEOF(3);
+			var result = file.IsEOF(2);
 
 			Assert.True(result);
 		}
