@@ -2,7 +2,7 @@ using BaseAbstractions;
 using System;
 using Xunit;
 
-namespace FinderUnitTests {
+namespace SimpleFinderStringUnitTests {
 	public static class Factory {
 		public static IFile CreateBasicString(string content) {
 			return new BasicString.Implementation(content);

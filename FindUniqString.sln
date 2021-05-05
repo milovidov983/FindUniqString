@@ -13,11 +13,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BasicString", "src\BasicStr
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{480FB0A9-7BF4-4C6B-8037-641565EF00A1}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinderUnitTests", "tests\FinderUnitTests\FinderUnitTests.csproj", "{62B6EF0B-5481-4281-BBB7-6BD8DA90A630}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleFinderStringUnitTests", "tests\FinderUnitTests\SimpleFinderStringUnitTests.csproj", "{62B6EF0B-5481-4281-BBB7-6BD8DA90A630}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BasicFile", "src\BasicFile\BasicFile.csproj", "{F0D94B77-3CCA-4298-995A-DD50523C0B4D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BasicFile", "src\BasicFile\BasicFile.csproj", "{F0D94B77-3CCA-4298-995A-DD50523C0B4D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BasicFileTests", "tests\BasicFileTests\BasicFileTests.csproj", "{03640132-2072-4A88-9282-0FEB07DB911D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BasicFileTests", "tests\BasicFileTests\BasicFileTests.csproj", "{03640132-2072-4A88-9282-0FEB07DB911D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

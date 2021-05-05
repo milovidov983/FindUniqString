@@ -1,0 +1,1 @@
+﻿The file must be ASCII encoded

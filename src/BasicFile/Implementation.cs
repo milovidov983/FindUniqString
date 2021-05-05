@@ -4,14 +4,16 @@ using System.IO;
 
 namespace BasicFile {
 	public sealed class Implementation : IFile, IDisposable {
-		readonly StreamReader reader;
+		readonly FileStream reader;
 		readonly long len;
-		readonly char[] tmp1 = new char[1];
-		readonly char[] tmp2 = new char[1];
+		readonly byte[] tmp1 = new byte[1];
+		readonly byte[] tmp2 = new byte[1];
+		readonly char[] charArray1 = new char[2];
+
 
 		public Implementation(string path) {
-			reader = new StreamReader(path);
-			len = reader.BaseStream.Length;
+			reader = new FileStream(path, FileMode.Open);
+			len = reader.Length;
 		}
 
 		public void Dispose() {
@@ -20,10 +22,13 @@ namespace BasicFile {
 		}
 
 		public char GetCurrentChar(int idx) {
-			reader.BaseStream.Flush();
-			reader.BaseStream.Seek(idx, SeekOrigin.Begin);
+			reader.Position = idx;
 			reader.Read(tmp1, 0, 1);
-			return tmp1[0];
+
+			var c = Convert.ToChar(tmp1[0]);
+
+			return c;
+
 		}
 
 		public bool IsEOF(int idx) {
@@ -31,9 +36,10 @@ namespace BasicFile {
 		}
 
 		public bool IsEquals(int index1, int index2) {
-			reader.BaseStream.Seek(index1, SeekOrigin.Begin);
+			reader.Position = index1;
 			reader.Read(tmp1, 0, 1);
-			reader.BaseStream.Seek(index2, SeekOrigin.Begin);
+			reader.Position = index2;
+			//reader.BaseStream.Seek(index2, SeekOrigin.Begin);
 			reader.Read(tmp2, 0, 1);
 
 			return tmp1[0] == tmp2[0];
