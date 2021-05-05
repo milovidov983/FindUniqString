@@ -19,6 +19,10 @@ namespace BasicString {
 			return content.Length == idx;
 		}
 
+		public bool IsEquals(int index1, int index2) {
+			return content[index1] == content[index2];
+		}
+
 		public bool IsLineBreak(int idx) {
 			return content[idx] == newLineToken;
 		}
