@@ -48,7 +48,7 @@ namespace BasicFileTests {
 		}
 		[Fact]
 		public void IsLineBreak_True() {
-			var file = new BasicFile.Implementation(@"examples\a-nextline1.txt");
+			var file = new BasicFile.Implementation(@"examples/a-nextline1.txt");
 			var index = file.MoveIndexToNewLine(0);
 
 			var result = file.IsLineBreak(index);
@@ -57,7 +57,7 @@ namespace BasicFileTests {
 		}
 		[Fact]
 		public void IsLineBreak_False() {
-			var file = new BasicFile.Implementation(@"examples\a-nextline2.txt");
+			var file = new BasicFile.Implementation(@"examples/a-nextline2.txt");
 			var index = 0;
 
 			var result = file.IsLineBreak(index);
