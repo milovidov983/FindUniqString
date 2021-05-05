@@ -12,7 +12,7 @@ namespace BasicFile {
 
 
 		public Implementation(string path) {
-			reader = new FileStream(path, FileMode.Open);
+			reader = new FileStream($"{System.IO.Directory.GetCurrentDirectory()}/{path}", FileMode.Open);
 			len = reader.Length;
 		}
 
