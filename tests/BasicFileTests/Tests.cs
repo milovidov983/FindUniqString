@@ -6,7 +6,7 @@ namespace BasicFileTests {
 	public class Tests {
 		[Fact]
 		public void DataSetIsEqual_IsEquals_True() {
-			var file = new BasicFile.Implementation(@".\examples\aa1.txt");
+			var file = new BasicFile.Implementation(@"examples/aa1.txt");
 
 			var result = file.IsEquals(0, 1);
 
@@ -14,7 +14,7 @@ namespace BasicFileTests {
 		}
 		[Fact]
 		public void DataSetIsNotEqual_IsEquals_False() {
-			var file = new BasicFile.Implementation(@".\examples\ab1.txt");
+			var file = new BasicFile.Implementation(@"examples/ab1.txt");
 
 			var result = file.IsEquals(0, 1);
 
@@ -22,7 +22,7 @@ namespace BasicFileTests {
 		}
 		[Fact]
 		public void IsEof_False() {
-			var file = new BasicFile.Implementation(@".\examples\aa2.txt");
+			var file = new BasicFile.Implementation(@"examples/aa2.txt");
 
 			var result = file.IsEOF(1);
 
@@ -30,7 +30,7 @@ namespace BasicFileTests {
 		}
 		[Fact]
 		public void IsEof_True() {
-			var file = new BasicFile.Implementation(@".\examples\aa3.txt");
+			var file = new BasicFile.Implementation(@"examples/aa3.txt");
 
 			var result = file.IsEOF(3);
 
@@ -38,7 +38,7 @@ namespace BasicFileTests {
 		}
 		[Fact]
 		public void GetChar_CharIsCorrect() {
-			var file = new BasicFile.Implementation(@".\examples\ab2.txt");
+			var file = new BasicFile.Implementation(@"examples/ab2.txt");
 
 			var result1 = file.GetCurrentChar(1);
 			var result2 = file.GetCurrentChar(0);
