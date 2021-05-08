@@ -7,6 +7,21 @@ namespace SimpleFinderFileUnitTests {
 		readonly SimpleFinder.Finder finder = new SimpleFinder.Finder();
 
 		[Fact]
+		public void TwoString_2Uniq()
+		{
+			var testFile = Factory.CreateBasicFile(@"examples/01mb.tmp");
+
+			System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();
+			sw.Start();
+
+			var uniqueCount = finder.Find(testFile);
+
+			System.Diagnostics.Debug.WriteLine($"\n\n{sw.ElapsedMilliseconds} ms\n\n");
+
+			Assert.Equal(2, uniqueCount);
+		}
+
+		[Fact]
 		public void TwoString_NoUniq() {
 			var testFile = Factory.CreateBasicFile(@"examples/aa1.txt");
 
