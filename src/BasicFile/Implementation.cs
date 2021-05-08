@@ -20,14 +20,16 @@ namespace BasicFile {
 			reader?.Dispose();
 		}
 
-		public char GetCurrentChar(int idx) {
+		public byte GetCurrentByte(int idx)
+		{
 			reader.Position = idx;
 			reader.Read(tmp1, 0, 1);
 
-			var c = Convert.ToChar(tmp1[0]);
+			return tmp1[0];
+		}
 
-			return c;
-
+		public char GetCurrentChar(int idx) {
+			return Convert.ToChar(GetCurrentByte(idx));
 		}
 
 		public bool IsEOF(int idx) {

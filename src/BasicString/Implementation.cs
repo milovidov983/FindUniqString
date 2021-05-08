@@ -11,7 +11,12 @@ namespace BasicString {
 			this.content = content;
 		}
 
-		public char GetCurrentChar(int idx) {
+        public byte GetCurrentByte(int idx)
+        {
+            throw new NotImplementedException();
+        }
+
+        public char GetCurrentChar(int idx) {
 			return content[idx];
 		}
 

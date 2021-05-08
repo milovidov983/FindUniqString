@@ -25,7 +25,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestUtils", "tests\TestUtil
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "utils", "utils", "{DCE4EEC9-3681-4D6B-B26F-BFFFB3CF43A2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestFileCreator", "utils\TestFileCreator\TestFileCreator.csproj", "{D9C66533-F291-49A5-BEAE-A32FE6611E2A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestFileCreator", "utils\TestFileCreator\TestFileCreator.csproj", "{D9C66533-F291-49A5-BEAE-A32FE6611E2A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdvFinder", "src\AdvFinder\AdvFinder\AdvFinder.csproj", "{7FD5EA6F-B9A7-42BB-A2D6-B24171AE4980}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -69,6 +71,10 @@ Global
 		{D9C66533-F291-49A5-BEAE-A32FE6611E2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D9C66533-F291-49A5-BEAE-A32FE6611E2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D9C66533-F291-49A5-BEAE-A32FE6611E2A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7FD5EA6F-B9A7-42BB-A2D6-B24171AE4980}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7FD5EA6F-B9A7-42BB-A2D6-B24171AE4980}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7FD5EA6F-B9A7-42BB-A2D6-B24171AE4980}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7FD5EA6F-B9A7-42BB-A2D6-B24171AE4980}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -83,6 +89,7 @@ Global
 		{000DC081-3B97-4C0A-8E29-0ABEA7480D4D} = {480FB0A9-7BF4-4C6B-8037-641565EF00A1}
 		{DA0890E9-92AD-4893-8AC5-0A7AC6B0B325} = {480FB0A9-7BF4-4C6B-8037-641565EF00A1}
 		{D9C66533-F291-49A5-BEAE-A32FE6611E2A} = {DCE4EEC9-3681-4D6B-B26F-BFFFB3CF43A2}
+		{7FD5EA6F-B9A7-42BB-A2D6-B24171AE4980} = {49880AAB-5465-4C9E-9B46-BB86E3D9A920}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D57A5E88-E5F6-46FA-AE51-1934D370A64D}
