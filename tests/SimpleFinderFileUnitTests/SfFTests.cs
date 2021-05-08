@@ -9,19 +9,19 @@ namespace SimpleFinderFileUnitTests {
 		[Fact]
 		public void PerformanceTest()
 		{
-			var testFile = Factory.CreateBasicFile(@"examples/01mb.tmp");
+			var testFile = Factory.CreateBasicFile(@"examples/100kb.txt");
 
-			//System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();
-			//sw.Start();
+            System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();
+            sw.Start();
 
-			//var uniqueCount = finder.Find(testFile);
+            var uniqueCount = finder.Find(testFile);
 
-			//System.Diagnostics.Debug.WriteLine($"\n\n{sw.ElapsedMilliseconds} ms\n\n");
+            System.Diagnostics.Debug.WriteLine($"\n\n{sw.ElapsedMilliseconds} ms\n\n");
 
-			//Assert.Equal(2, uniqueCount);
-		}
+            Assert.Equal(2, uniqueCount);
+        }
 
-		[Fact]
+        [Fact]
 		public void TwoString_NoUniq() {
 			var testFile = Factory.CreateBasicFile(@"examples/aa1.txt");
 

@@ -5,12 +5,13 @@ using System.Text;
 
 namespace TestFileCreator {
     class Program {
-        readonly static FileStream tmp = new FileStream("001mb.txt", FileMode.Create);
+        readonly static FileStream tmp = new FileStream("ok100kb.txt", FileMode.Create);
         private static float fileSizeMb;
+        private static int strSize = 1;
 
         static void Main(string[] args) {
             var uniqStringCount = 2;//Convert.ToInt32(args[0]);
-            fileSizeMb = 0.01F; //Convert.ToInt32(args[1]);
+            fileSizeMb = 0.1F; //Convert.ToInt32(args[1]);
 
             
             int index = FillUniq(uniqStringCount);
@@ -106,7 +107,8 @@ namespace TestFileCreator {
 
         private static byte[] CreateString(string prefix = null)
         {
-            var str = $"{prefix}{Guid.NewGuid()}\n";
+            var body = string.Join("", Enumerable.Range(0, strSize).Select(_ => Guid.NewGuid().ToString()));
+            var str = $"{prefix}{body}\n";
             return Encoding.ASCII.GetBytes(str);
 
         }
