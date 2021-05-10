@@ -51,8 +51,6 @@ namespace AdvFinder {
                 Next = next
             };
 
-            System.Diagnostics.Debug.WriteLine($"ReadData Pos:{pos} {node}");
-
             return node;
         }
 

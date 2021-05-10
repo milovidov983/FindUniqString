@@ -24,6 +24,16 @@ namespace AdvFinder {
                     counter++;
                 }
             }
+
+            var empty = 0;
+            foreach(var i in dataIndex.Indexes) {
+                if(i == -1) {
+                    empty++;
+                }
+            }
+
+            System.Diagnostics.Debug.WriteLine($"Empty bags {empty}");
+
             return counter;
         }
 

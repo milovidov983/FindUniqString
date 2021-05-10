@@ -4,7 +4,7 @@ using System.Linq;
 namespace AdvFinder {
     public class IndexData
     {
-        public const int Size = 1024; // test size 1024
+        public const int Size = 2048; // test size 1024
         public long[] Indexes { get; set; }
 
         public IndexData()
