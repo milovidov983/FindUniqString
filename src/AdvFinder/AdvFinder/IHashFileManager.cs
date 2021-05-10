@@ -7,7 +7,7 @@ namespace AdvFinder {
         long SaveNew(byte[] hash);
         void Update(long pos, NodeItem node);
         IEnumerable<NodeItem> GetAll();
-        (NodeItem storedNode, long storedNodePos) GetEqualOrLastNode(long pos, byte[] hash);
+        (NodeItem storedNode, long storedNodePos, bool isEquals) GetEqualOrLastNode(long pos, byte[] hash);
         void Close();
     }
 
@@ -20,7 +20,7 @@ namespace AdvFinder {
         }
 
 
-        public (NodeItem storedNode, long storedNodePos) GetEqualOrLastNode(long startPosition, byte[] hash) {
+        public (NodeItem storedNode, long storedNodePos, bool isEquals) GetEqualOrLastNode(long startPosition, byte[] hash) {
             return file.GetEqualOrLastNode(startPosition, hash);
         }
 

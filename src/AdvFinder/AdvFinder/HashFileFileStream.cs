@@ -17,16 +17,14 @@ namespace AdvFinder {
 
         public long WriteData(long? pos, NodeItem data) {
             fs.Seek(pos ?? fs.Length, SeekOrigin.Begin);
-            var bytes = data.GetBytes().ToArray();
-            fs.Write(bytes, 0, bytes.Length);
-            fs.Flush();
+            var bytes = data.GetBytes();
+            fs.Write(bytes);
 
             return fs.Position;
         }
 
-
-
-        public (NodeItem storedNode, long storedNodePos)  GetEqualOrLastNode(long startPosition, byte[] hash) { 
+        readonly byte[] readBuffer = new byte[NodeItem.SizeBytes];
+        public (NodeItem storedNode, long storedNodePos, bool isEquals)  GetEqualOrLastNode(long startPosition, byte[] hash) { 
             if (startPosition > fs.Length) {
                 return default;
             }
@@ -34,26 +32,44 @@ namespace AdvFinder {
 
             while (true) {
                 fs.Seek(next, SeekOrigin.Begin);
+                fs.Read(readBuffer, 0, (int)NodeItem.SizeBytes);
 
-                var tmp = new byte[NodeItem.SizeBytes];
-                fs.Read(tmp, 0, (int)NodeItem.SizeBytes);
-                var storedHash = tmp.AsSpan().Slice(0, 32).ToArray();
+                Span<byte> storedHash = readBuffer.AsSpan().Slice(0, NodeItem.HashSize);
 
-                long count = BitConverter.ToInt32(tmp.AsSpan().Slice(32, 8));
-                next = BitConverter.ToInt32(tmp.AsSpan().Slice(40, 8));
+                Span<byte> countSpan = readBuffer.AsSpan().Slice(NodeItem.CountOffset, NodeItem.CountSize);
+                long count = BitConverter.ToInt32(countSpan);
 
-                if (next == -1 || Enumerable.SequenceEqual(storedHash, hash)) {
+                Span<byte> nextSpan = readBuffer.AsSpan().Slice(NodeItem.NextOffset, NodeItem.NextSize);
+                next = BitConverter.ToInt32(nextSpan);
+
+                bool? isEquals = null;
+                if (next == -1 || SeqEqual(storedHash, hash, out isEquals)) {
+                    var node = new NodeItem {
+                        Hash = storedHash.ToArray(),
+                        Count = count,
+                        Next = next
+                    };
+                    
                     return (
-                            storedNode: new NodeItem {
-                                Count = count,
-                                Hash = storedHash,
-                                Next = next
-                            },
-                            storedNodePos: fs.Position - NodeItem.SizeBytes
+                            storedNode: node,
+                            storedNodePos: fs.Position - NodeItem.SizeBytes,
+                            isEquals: isEquals ?? SeqEqual(storedHash, hash, out _)
                         );
                 }
             }
         }
+
+        private bool SeqEqual(ReadOnlySpan<byte> r, ReadOnlySpan<byte> l, out bool? result) {
+            for(var i = 0; i < r.Length; i++) {
+                if(r[i] != l[i]) {
+                    result = false;
+                    return false;
+                }
+            }
+            result = true;
+            return true;
+        }
+
 
         public IEnumerable<NodeItem> GetAll() {
             using BinaryReader reader = new(File.Open(fileName, FileMode.Open));

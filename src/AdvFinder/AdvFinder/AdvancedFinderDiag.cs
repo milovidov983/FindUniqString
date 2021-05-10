@@ -173,14 +173,14 @@ namespace AdvFinder {
                 while (true) {
                     ssw.Restart();
                     
-                    (NodeItem storedNode, long storedNodePos) = fileManager.GetEqualOrLastNode(currentPosition, hash);
+                    (NodeItem storedNode, long storedNodePos, bool IsEquals) = fileManager.GetEqualOrLastNode(currentPosition, hash);
                     
                     ssw.Stop();
                     totatGetEqualOrLastNode += ssw.ElapsedMilliseconds;
                     getEqualOrLastNodeMax = Math.Max(getEqualOrLastNodeMax, ssw.ElapsedMilliseconds);
                     counterGetEqualOrLastNode++;
 
-                    if (Enumerable.SequenceEqual(storedNode.Hash, hash)) {
+                    if (IsEquals) {
                         storedNode.Count++;
 
                         ssw.Restart();

@@ -17,30 +17,31 @@ namespace AdvFinder {
             inputFile = new BasicFile.Implementation(fName);
             fileManager = new HashFileManaager();
             dataIndex = new IndexData();
+
             FillBagFile();
 
-
             int counter = 0;
-
             foreach (var node in fileManager.GetAll()) {
                 if (node.Count == 1) {
                     counter++;
                 }
             }
 
-            var empty = 0;
-            foreach(var i in dataIndex.Indexes) {
-                if(i == -1) {
-                    empty++;
-                }
-            }
-
-            System.Diagnostics.Debug.WriteLine($"Empty bags {empty}");
+            PrintDebugStatistics();
 
             return counter;
         }
 
-        
+        private void PrintDebugStatistics() {
+            var empty = 0;
+            foreach (var i in dataIndex.Indexes) {
+                if (i == -1) {
+                    empty++;
+                }
+            }
+            System.Diagnostics.Debug.WriteLine($"Empty bags {empty}");
+        }
+
         private void FillBagFile() {
             int index = 0;
 
@@ -87,9 +88,10 @@ namespace AdvFinder {
                 dataIndex.SavePosition(idx, newPosition);
             } else {
                 while (true) {
-                    (NodeItem storedNode, long storedNodePos) = fileManager.GetEqualOrLastNode(currentPosition, hash);
+                    (NodeItem storedNode, long storedNodePos, bool isEquals) 
+                        = fileManager.GetEqualOrLastNode(currentPosition, hash);
 
-                    if (Enumerable.SequenceEqual(storedNode.Hash, hash)) {
+                    if (isEquals) {
                         storedNode.Count++;
                         fileManager.Update(storedNodePos, storedNode);
                         break;
