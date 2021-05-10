@@ -4,23 +4,17 @@ using System.IO;
 using System.Linq;
 
 namespace AdvFinder {
-
-
-    public class AFinder {
+    public class AdvancedFinder {
         private IFile inputFile;
         private IndexData dataIndex;
         private IHashFileManager fileManager;
-        private int bufferSize = 512;
-        
-
+        private readonly int bufferSize = 512;
+   
 
         public int Find2(string fName) {
             inputFile = new BasicFile.Implementation(fName);
             fileManager = new HashFileManaager();
             dataIndex = new IndexData();
-
-            FillDebugData();
-
             FillBagFile();
 
             int counter = 0;
@@ -28,8 +22,6 @@ namespace AdvFinder {
             foreach (var node in fileManager.GetAll()) {
                 if (node.Count == 1) {
                     counter++;
-                    //using BinaryWriter writer = new(File.Open($"111h{counter}", FileMode.OpenOrCreate));
-                    //writer.Write(node.Hash);
                 }
             }
             return counter;
@@ -43,10 +35,7 @@ namespace AdvFinder {
                 }
                 var (h, i) = ReadNextString(index);
                 index = i;
-                //byte[] hash = h;
-                if (debugData.Any(x => Enumerable.SequenceEqual(x, h))) {
-                    System.Diagnostics.Debug.WriteLine("");
-                }
+
                 SaveNextHash(h);
             }
         }
@@ -71,23 +60,9 @@ namespace AdvFinder {
             return (hash, resultIndex);
         }
 
-        private List<byte[]> debugData = Enumerable.Range(0,4).Select(_=> new byte[32]).ToList();
-
-        private void FillDebugData() {
-            for (int num = 1; num <= 4; num++) {
-                using BinaryReader reader = new(File.Open($"111h{num}", FileMode.Open));
-                for (int i = 0; i < NodeItem.HashSize; i++) {
-                    debugData[num-1][i] = reader.ReadByte();
-                }
-
-            }
-        }
-
         private void SaveNextHash(byte[] hash) {
             var idx = Utils.ComputeIndex(hash);
             var pos = dataIndex.GetPosition(idx);
-
-
 
             if (pos == -1) {
                 long index = fileManager.SaveNew(hash);
