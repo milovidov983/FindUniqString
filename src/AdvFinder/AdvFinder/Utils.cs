@@ -19,12 +19,10 @@ namespace AdvFinder {
         public static int ComputeIndex(byte[] rawData)
         {
             int hash = 5381;
-            foreach (var item in rawData)
-            {
+            foreach (var item in rawData) {
                 hash = ((hash << 5) + hash) + item;
             }
-            return Math.Abs( hash % IndexData.Size );
+            return Math.Abs(hash % IndexData.Size);
         }
-
     }
 }
