@@ -11,16 +11,13 @@ namespace AdvFinderTests {
         public void Test1() {
             var advf = new AFinder();
 
-            var r = advf.Find2(@"examples/100kb.txt");
+            //var result = advf.Find2(@"examples/100kb.txt");            
+            var result = advf.Find2(@"examples/test.txt");
 
-            Console.WriteLine();
-
+            Assert.Equal(2, result);
         }
 
-        [Fact]
-        public void Create_Two_Bag_AfterCorrect_Read_All_Bags() {
-            var fileCreator = 
-        }
+      
     }
 
 }  

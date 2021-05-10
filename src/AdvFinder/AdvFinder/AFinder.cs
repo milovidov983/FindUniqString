@@ -1,23 +1,36 @@
 ﻿using BaseAbstractions;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace AdvFinder {
+
+
     public class AFinder {
         private IFile inputFile;
         private IndexData dataIndex;
-        private IBagFile bagFile;
+        private IHashFileManager fileManager;
         private int bufferSize = 512;
         
 
+
         public int Find2(string fName) {
             inputFile = new BasicFile.Implementation(fName);
-            bagFile = new BagFile();
+            fileManager = new HashFileManaager();
             dataIndex = new IndexData();
 
             FillBagFile();
 
-            return 1;
+            int counter = 0;
+
+            foreach (var node in fileManager.GetAll()) {
+                if (node.Count == 1) {
+                    counter++;
+                    //using BinaryWriter writer = new(File.Open($"111h{counter}", FileMode.OpenOrCreate));
+                    //writer.Write(node.Hash);
+                }
+            }
+            return counter;
         }
 
         private void FillBagFile() {
@@ -33,7 +46,7 @@ namespace AdvFinder {
         }
 
         private (byte[], int) ReadNextString(int idx) {
-            List<byte> buffer = new List<byte>();
+            List<byte> buffer = new();
             while (!inputFile.IsEOF(idx) && !inputFile.IsLineBreak(idx)) {
                 var c = inputFile.GetCurrentByte(idx);
                 buffer.Add(c);
@@ -57,17 +70,17 @@ namespace AdvFinder {
             var pos = dataIndex.GetPosition(idx);
 
             if (pos == -1) {
-                int index = bagFile.SaveNewBag(hash);
+                long index = fileManager.SaveNew(hash);
                 dataIndex.SavePosition(idx, index);
             } else {
                 while (true) {
-                    Bag storedBag = bagFile.GetBag(pos);
+                    NodeItem storedBag = fileManager.Get(pos);
                     if (Enumerable.SequenceEqual(storedBag.Hash, hash)) {
                         storedBag.Count++;
-                        bagFile.UpdateBag(pos, storedBag);
+                        fileManager.Update(pos, storedBag);
                         break;
                     } else if (storedBag.Next == -1) {
-                        storedBag.Next = bagFile.SaveNewBag(hash);
+                        storedBag.Next = fileManager.SaveNew(hash);
                         break;
                     } else {
                         pos = storedBag.Next;
@@ -75,88 +88,5 @@ namespace AdvFinder {
                 }
             }
         }
-
-
-        //public int Find(string fileName) {
-        //    int index = -1;
-
-        //    byte[] buffer = new byte[bufferSize];
-        //    int currentBufferIndex = 0;
-        //    byte[] sha256 = new byte[hashSize];
-        //    while (true) {
-        //        index++;
-
-        //        if (inputFile.IsEOF(index))
-        //        {
-        //            sha256 = Compute(sha256,buffer);
-        //            Save(sha256);
-        //            break;
-        //        }
-
-        //        if (inputFile.IsLineBreak(index))
-        //        {
-        //            sha256 = Compute(sha256, buffer);
-        //            Save(sha256);
-
-        //            sha256 = new byte[hashSize];
-        //            buffer = new byte[bufferSize];
-        //            currentBufferIndex = 0;
-        //        } else
-        //        {
-        //            if (currentBufferIndex < bufferSize)
-        //            {
-        //                buffer[currentBufferIndex] = inputFile.GetCurrentByte(index);
-        //                currentBufferIndex++;
-        //            } else
-        //            {
-        //                sha256 = Compute(sha256, buffer);
-        //                buffer = new byte[bufferSize];
-        //                currentBufferIndex = 0;
-        //            }
-        //        }
-        //    }
-
-
-        //    return 0;
-        //}
-
-        //private byte[] Compute(byte[] sha256, byte[] buffer)
-        //{
-        //    return Utils.ComputeSha256Hash(sha256.Concat(buffer).ToArray());
-        //}
-
-        //private void Save(byte[] data)
-        //{
-        //    var index = Utils.ComputeIndex(data);
-        //    var position = dataIndex.GetPosition(index);
-        //    if(position == -1)
-        //    {
-        //        var newPos = bagFile.Create(data);
-        //        dataIndex.SavePosition(index, newPos);
-        //        return;
-        //    }
-        //    while(true)
-        //    {
-        //        var hash = bagFile.GetHash(position);
-        //        if(IsEquals(data, hash))
-        //        {
-        //            bagFile.Increment(position);
-        //            break;
-        //        } else {
-        //            var nextPos = bagFile.GetNext(position);
-        //            if(nextPos == -1)
-        //            {
-        //                var newPos = bagFile.Create(data);
-        //                bagFile.Bind(position, newPos);
-        //                break;
-        //            }
-        //        }
-        //    }
-        //}
-
-        //private bool IsEquals(byte[] data, byte[] hash)
-        //{
-        //    return Enumerable.SequenceEqual(data, hash);
-        //}
     }
 }

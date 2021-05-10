@@ -4,22 +4,22 @@ using System.Linq;
 namespace AdvFinder {
     public class IndexData
     {
-        public const int Size = 1024;
-        public int[] Indexes { get; set; }
+        public const int Size = 1024; // test size 1024
+        public long[] Indexes { get; set; }
 
         public IndexData()
         {
-            Indexes = Enumerable.Range(0, Size).Select(_ => -1).ToArray();
+            Indexes = Enumerable.Range(0, Size).Select(_ => -1L).ToArray();
         }
 
-        public int GetPosition(int i)
+        public long GetPosition(int i)
         {
-            return Indexes[Math.Abs(i)];
+            return Indexes[i];
         }
 
-        public void SavePosition(int i, int position)
+        public void SavePosition(int i, long position)
         {
-            Indexes[Math.Abs(i)] = position;
+            Indexes[i] = position;
         }
     }
 }
