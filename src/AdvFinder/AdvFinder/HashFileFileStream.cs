@@ -4,21 +4,19 @@ using System.IO;
 using System.Linq;
 
 namespace AdvFinder {
-    public sealed class HashFileFs  {
+    public sealed class HashFileFileStream  {
         private readonly string fileName;
         public FileStream fs;
 
-        public HashFileFs(string fileName) {
-            fs = new FileStream(fileName, FileMode.OpenOrCreate);
+        public HashFileFileStream(string fileName) {
             this.fileName = fileName;
+            fs = new FileStream(fileName, FileMode.OpenOrCreate);
         }
 
       
 
         public long WriteData(long? pos, NodeItem data) {
-
             fs.Seek(pos ?? fs.Length, SeekOrigin.Begin);
-
             var bytes = data.GetBytes().ToArray();
             fs.Write(bytes, 0, bytes.Length);
             fs.Flush();
@@ -33,10 +31,8 @@ namespace AdvFinder {
                 return default;
             }
             long next = startPosition;
-            var counter = 0;
+
             while (true) {
-                counter++;
-                maxStep = Math.Max(maxStep, counter);
                 fs.Seek(next, SeekOrigin.Begin);
 
                 var tmp = new byte[NodeItem.SizeBytes];
@@ -61,7 +57,6 @@ namespace AdvFinder {
 
         public IEnumerable<NodeItem> GetAll() {
             using BinaryReader reader = new(File.Open(fileName, FileMode.Open));
-            //BinaryReader reader = GetReader();
 
             var tmpHash = new byte[NodeItem.HashSize];
             while (reader.BaseStream.Length > reader.BaseStream.Position) {
@@ -80,8 +75,5 @@ namespace AdvFinder {
             }
             yield break;
         }
-
-        public int maxStep = 0;
-      
     }
 }

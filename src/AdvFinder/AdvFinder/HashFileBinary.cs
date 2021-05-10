@@ -4,11 +4,11 @@ using System.IO;
 using System.Linq;
 
 namespace AdvFinder {
-    public sealed class HashFile  {
+    public sealed class HashFileBinary  {
         private readonly string fileName;
      
 
-        public HashFile(string fileName) {
+        public HashFileBinary(string fileName) {
             this.fileName = fileName;
         }
 

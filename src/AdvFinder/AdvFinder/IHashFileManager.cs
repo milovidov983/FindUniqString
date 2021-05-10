@@ -8,16 +8,15 @@ namespace AdvFinder {
         void Update(long pos, NodeItem node);
         IEnumerable<NodeItem> GetAll();
         (NodeItem storedNode, long storedNodePos) GetEqualOrLastNode(long pos, byte[] hash);
-        string GetDiagData();
         void Close();
     }
 
     public class HashFileManaager : IHashFileManager {
-        readonly HashFileFs file;
+        readonly HashFileFileStream file;
         public readonly string FileName = Guid.NewGuid().ToString("N")+".tmp";
 
         public HashFileManaager() {
-            file = new HashFileFs(FileName);
+            file = new HashFileFileStream(FileName);
         }
 
 
@@ -38,10 +37,6 @@ namespace AdvFinder {
 
         public IEnumerable<NodeItem> GetAll() {
             return file.GetAll();
-        }
-
-        public string GetDiagData() {
-            return $"max transition steps: {file.maxStep}";
         }
 
         public void Close() {
