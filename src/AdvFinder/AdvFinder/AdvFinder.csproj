@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\BaseAbstractions\BaseAbstractions.csproj" />
+    <ProjectReference Include="..\..\BasicFile\BasicFile.csproj" />
   </ItemGroup>
 
 </Project>
