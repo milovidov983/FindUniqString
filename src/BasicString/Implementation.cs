@@ -11,6 +11,8 @@ namespace BasicString {
 			this.content = content;
 		}
 
+        public long Length => throw new NotImplementedException();
+
         public byte GetCurrentByte(int idx)
         {
             throw new NotImplementedException();

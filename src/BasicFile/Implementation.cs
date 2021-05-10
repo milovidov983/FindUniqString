@@ -15,7 +15,9 @@ namespace BasicFile {
 			len = reader.Length;
 		}
 
-		public void Dispose() {
+        public long Length => len;
+
+        public void Dispose() {
 			reader?.Close();
 			reader?.Dispose();
 		}

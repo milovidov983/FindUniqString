@@ -10,14 +10,18 @@ namespace AdvFinder {
         private IFile inputFile;
         private IndexData dataIndex;
         private IHashFileManager fileManager;
-        private readonly int bufferSize = 512;
-   
+        private readonly int readStringBufferSize = 512;
+        private readonly List<byte> readStringBuffer;
+
+        public AdvancedFinder() {
+            readStringBuffer = new(readStringBufferSize + 1);
+        }
+
 
         public int Find(string fName) {
             inputFile = new BasicFile.Implementation(fName);
-            fileManager = new HashFileManaager();
-            dataIndex = new IndexData();
-
+            fileManager = new HashFileManager();
+            dataIndex = new IndexData(inputFile.Length);
             FillBagFile();
 
             int counter = 0;
@@ -57,15 +61,16 @@ namespace AdvFinder {
             fileManager.Close();
         }
 
+        
         private (byte[], int) ReadNextString(int idx) {
-            List<byte> buffer = new();
+            readStringBuffer.Clear();
             while (!inputFile.IsEOF(idx) && !inputFile.IsLineBreak(idx)) {
                 var c = inputFile.GetCurrentByte(idx);
-                buffer.Add(c);
-                if (buffer.Count >= bufferSize) {
-                    var intermedateHash = Utils.ComputeSha256Hash(buffer.ToArray());
-                    buffer.Clear();
-                    buffer.AddRange(intermedateHash);
+                readStringBuffer.Add(c);
+                if (readStringBuffer.Count >= readStringBufferSize) {
+                    var intermedateHash = Utils.ComputeSha256Hash(readStringBuffer.ToArray());
+                    readStringBuffer.Clear();
+                    readStringBuffer.AddRange(intermedateHash);
                 }
                 idx++;
             }
@@ -73,7 +78,7 @@ namespace AdvFinder {
             if(resultIndex != -1 && inputFile.IsLineBreak(idx)) {
                 resultIndex++;
             }
-            var hash = Utils.ComputeSha256Hash(buffer.ToArray());
+            var hash = Utils.ComputeSha256Hash(readStringBuffer.ToArray());
             return (hash, resultIndex);
         }
 

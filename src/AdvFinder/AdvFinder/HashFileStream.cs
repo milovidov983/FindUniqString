@@ -4,11 +4,11 @@ using System.IO;
 using System.Linq;
 
 namespace AdvFinder {
-    public sealed class HashFileFileStream  {
+    public sealed class HashFileStream  {
         private readonly string fileName;
         public FileStream fs;
 
-        public HashFileFileStream(string fileName) {
+        public HashFileStream(string fileName) {
             this.fileName = fileName;
             fs = new FileStream(fileName, FileMode.OpenOrCreate);
         }

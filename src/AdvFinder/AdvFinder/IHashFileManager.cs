@@ -11,12 +11,12 @@ namespace AdvFinder {
         void Close();
     }
 
-    public class HashFileManaager : IHashFileManager {
-        readonly HashFileFileStream file;
+    public class HashFileManager : IHashFileManager {
+        readonly HashFileStream file;
         public readonly string FileName = Guid.NewGuid().ToString("N")+".tmp";
 
-        public HashFileManaager() {
-            file = new HashFileFileStream(FileName);
+        public HashFileManager() {
+            file = new HashFileStream(FileName);
         }
 
 

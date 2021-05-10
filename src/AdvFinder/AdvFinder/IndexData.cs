@@ -4,13 +4,17 @@ using System.Linq;
 namespace AdvFinder {
     public class IndexData
     {
-        public const int Size = 10000;
-        //public const int Size = 2048; // test size 2048
-        //public const int Size = 1024;
+        public static int Size;
         public long[] Indexes { get; set; }
 
-        public IndexData()
+        public IndexData(long inFileSize)
         {
+            Size = inFileSize switch {
+                < 512 * 1024 => 2048, // < 512 kb
+                < 1024 * 1024 => 4096, // < 1mb
+                < 1024 * 1024 * 10 => 10000, // < 10mb
+                _ => 100000
+            };
             Indexes = Enumerable.Range(0, Size).Select(_ => -1L).ToArray();
         }
 
