@@ -11,8 +11,8 @@ namespace AdvFinderTests {
         public void Test1() {
             var advf = new AFinder();
 
-            //var result = advf.Find2(@"examples/100kb.txt");            
-            var result = advf.Find2(@"examples/test.txt");
+            var result = advf.Find2(@"examples/100kb.txt");            
+            //var result = advf.Find2(@"examples/test.txt");
 
             Assert.Equal(2, result);
         }

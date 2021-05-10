@@ -19,6 +19,8 @@ namespace AdvFinder {
             fileManager = new HashFileManaager();
             dataIndex = new IndexData();
 
+            FillDebugData();
+
             FillBagFile();
 
             int counter = 0;
@@ -41,6 +43,10 @@ namespace AdvFinder {
                 }
                 var (h, i) = ReadNextString(index);
                 index = i;
+                //byte[] hash = h;
+                if (debugData.Any(x => Enumerable.SequenceEqual(x, h))) {
+                    System.Diagnostics.Debug.WriteLine("");
+                }
                 SaveNextHash(h);
             }
         }
@@ -65,9 +71,23 @@ namespace AdvFinder {
             return (hash, resultIndex);
         }
 
+        private List<byte[]> debugData = Enumerable.Range(0,4).Select(_=> new byte[32]).ToList();
+
+        private void FillDebugData() {
+            for (int num = 1; num <= 4; num++) {
+                using BinaryReader reader = new(File.Open($"111h{num}", FileMode.Open));
+                for (int i = 0; i < NodeItem.HashSize; i++) {
+                    debugData[num-1][i] = reader.ReadByte();
+                }
+
+            }
+        }
+
         private void SaveNextHash(byte[] hash) {
             var idx = Utils.ComputeIndex(hash);
             var pos = dataIndex.GetPosition(idx);
+
+
 
             if (pos == -1) {
                 long index = fileManager.SaveNew(hash);
@@ -81,6 +101,7 @@ namespace AdvFinder {
                         break;
                     } else if (storedBag.Next == -1) {
                         storedBag.Next = fileManager.SaveNew(hash);
+                        fileManager.Update(pos, storedBag);
                         break;
                     } else {
                         pos = storedBag.Next;
