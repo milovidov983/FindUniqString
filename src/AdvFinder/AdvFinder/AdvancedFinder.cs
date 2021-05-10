@@ -19,6 +19,7 @@ namespace AdvFinder {
             dataIndex = new IndexData();
             FillBagFile();
 
+
             int counter = 0;
 
             foreach (var node in fileManager.GetAll()) {
@@ -95,6 +96,7 @@ namespace AdvFinder {
 
                 totalLoop++;
             }
+            fileManager.Close();
             var avg1 = (double) totalRead / totalLoop;
             var avg2 = (double) totatSave / totalLoop;
             System.Diagnostics.Debug.WriteLine($"ReadNextString {avg1} max {totalReadMax}");

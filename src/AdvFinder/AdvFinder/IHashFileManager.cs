@@ -5,24 +5,21 @@ using System.IO;
 namespace AdvFinder {
     public interface IHashFileManager {
         long SaveNew(byte[] hash);
-        NodeItem Get(long pos);
         void Update(long pos, NodeItem node);
         IEnumerable<NodeItem> GetAll();
         (NodeItem storedNode, long storedNodePos) GetEqualOrLastNode(long pos, byte[] hash);
         string GetDiagData();
+        void Close();
     }
 
     public class HashFileManaager : IHashFileManager {
-        readonly HashFile file;
+        readonly HashFileFs file;
         public readonly string FileName = Guid.NewGuid().ToString("N")+".tmp";
 
         public HashFileManaager() {
-            file = new HashFile(FileName);
+            file = new HashFileFs(FileName);
         }
 
-        public NodeItem Get(long pos) {
-            return file.ReadData(pos);
-        }
 
         public (NodeItem storedNode, long storedNodePos) GetEqualOrLastNode(long startPosition, byte[] hash) {
             return file.GetEqualOrLastNode(startPosition, hash);
@@ -47,6 +44,9 @@ namespace AdvFinder {
             return $"max transition steps: {file.maxStep}";
         }
 
+        public void Close() {
+            file.fs.Close();
+        }
      
     }
 }

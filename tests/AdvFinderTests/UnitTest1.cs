@@ -25,7 +25,7 @@ namespace AdvFinderTests {
             System.Diagnostics.Stopwatch sw = new();
             sw.Start();
 
-            var result = advf.Find(@"examples/50kb.txt");
+            var result = advf.Find(@"examples/1mb.txt");
             
 
             System.Diagnostics.Debug.WriteLine($"\n\n{sw.ElapsedMilliseconds} ms\n\n");
