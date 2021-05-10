@@ -8,7 +8,7 @@ using System.Linq;
 namespace AdvFinder {
     public class AdvancedFinder {
         private IFile inputFile;
-        private IndexData dataIndex;
+        private IndexData HashDataFileIndexes;
         private IHashFileManager fileManager;
         private readonly int readStringBufferSize = 512;
         private readonly List<byte> readStringBuffer;
@@ -21,8 +21,8 @@ namespace AdvFinder {
         public int Find(string fName) {
             inputFile = new BasicFile.Implementation(fName);
             fileManager = new HashFileManager();
-            dataIndex = new IndexData(inputFile.Length);
-            FillBagFile();
+            HashDataFileIndexes = new IndexData(inputFile.Length);
+            CreateHashDataFile();
 
             int counter = 0;
             foreach (var node in fileManager.GetAll()) {
@@ -38,7 +38,7 @@ namespace AdvFinder {
 
         private void PrintDebugStatistics() {
             var empty = 0;
-            foreach (var i in dataIndex.Indexes) {
+            foreach (var i in HashDataFileIndexes.Indexes) {
                 if (i == -1) {
                     empty++;
                 }
@@ -46,7 +46,7 @@ namespace AdvFinder {
             System.Diagnostics.Debug.WriteLine($"Empty bags {empty}");
         }
 
-        private void FillBagFile() {
+        private void CreateHashDataFile() {
             int index = 0;
 
             while (true) {
@@ -87,10 +87,10 @@ namespace AdvFinder {
         private void SaveNextHash(byte[] hash) {
             var idx = Utils.ComputeIndex(hash);
 
-            var currentPosition = dataIndex.GetPosition(idx);
+            var currentPosition = HashDataFileIndexes.GetPosition(idx);
             if (currentPosition == -1) {
                 long newPosition = fileManager.SaveNew(hash);
-                dataIndex.SavePosition(idx, newPosition);
+                HashDataFileIndexes.SavePosition(idx, newPosition);
             } else {
                 while (true) {
                     (NodeItem storedNode, long storedNodePos, bool isEquals) 

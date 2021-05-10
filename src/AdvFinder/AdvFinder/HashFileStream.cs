@@ -19,7 +19,7 @@ namespace AdvFinder {
             fs.Seek(pos ?? fs.Length, SeekOrigin.Begin);
             var bytes = data.GetBytes();
             fs.Write(bytes);
-
+            fs.Flush();
             return fs.Position;
         }
 
