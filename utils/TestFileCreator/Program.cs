@@ -5,13 +5,13 @@ using System.Text;
 
 namespace TestFileCreator {
     class Program {
-        readonly static FileStream tmp = new FileStream("1mb5s.txt", FileMode.Create);
+        readonly static FileStream tmp = new FileStream("10mb10s.txt", FileMode.Create);
         private static float fileSizeMb;
-        private static int strSize = 5;
+        private static int strSize = 10;
 
         static void Main(string[] args) {
             var uniqStringCount = 2;//Convert.ToInt32(args[0]);
-            fileSizeMb = 1.0F; //Convert.ToInt32(args[1]);
+            fileSizeMb = 10.0F; //Convert.ToInt32(args[1]);
 
             
             int index = FillUniq(uniqStringCount);
